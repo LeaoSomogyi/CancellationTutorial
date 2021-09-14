@@ -17,19 +17,18 @@ namespace CancellationTutorial.ConsoleApp
             // Enquanto não houve cancelamento, continue fazendo algo
             // while (!token.IsCancellationRequested)
             // {
+            //     token.ThrowIfCancellationRequested();
             //     método maroto
             // }
 
             // Mais comum
-            // token.ThrowIfCancellationRequested();
+
 
             // Exemplo com o while e com o IsCancellationRequested
             // await ExampleWithLoop(cancellationTokenSource);
 
             // Exemplo com o while e com o ThrowIfCancellationRequested
             await ExampleWithLoopThrow(cancellationTokenSource);
-
-
         }
 
         public static async Task ExampleWithLoop(CancellationTokenSource cancellationTokenSource)
@@ -69,7 +68,7 @@ namespace CancellationTutorial.ConsoleApp
 
             try
             {
-                while (true)
+                while (!cancellationTokenSource.IsCancellationRequested)
                 {
                     cancellationTokenSource.Token.ThrowIfCancellationRequested();
                     Console.WriteLine("Alguma operação que leva 3 segundos");

@@ -31,13 +31,17 @@ namespace CancellationTutorial.API.Services
 
         public async Task<GenericRecord> GetWithoutRequest(CancellationToken cancellationToken = default)
         {
-            for (int i = 0; i < int.MaxValue; i++)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                if (cancellationToken.IsCancellationRequested)
-                    throw new TaskCanceledException("Operação cancelada pelo usuário.");
+                cancellationToken.ThrowIfCancellationRequested();
 
-                //simulando uma operação que demore
-                await Task.CompletedTask;
+                for (int i = 0; i < int.MaxValue; i++)
+                {
+                    //simulando uma operação que demore
+                    await Task.CompletedTask;
+                }
+
+                break;
             }
 
             return new GenericRecord("Feito na munheca.");
