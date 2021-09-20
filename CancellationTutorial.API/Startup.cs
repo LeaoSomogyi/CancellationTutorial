@@ -27,6 +27,7 @@ namespace CancellationTutorial.API
             services.Configure<AppSettings>(Configuration);
             services.AddTransient<IRestClient, GenericRestClient>();
             services.AddTransient<IGenericService, GenericService>();
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
